@@ -1,0 +1,142 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: white;
+  padding: 20px;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 95vh;
+  height: 75vh;
+  box-shadow: 10px 10px 5px rgba(128, 128, 128, 0.5);
+  border: 0.5px solid rgb(216, 216, 216);
+  border-radius: 0px;
+  background-color: white;
+  overflow: hidden;
+}
+
+.container {
+  flex: 1 1 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.login_form {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 640px;
+  height: 300px;
+  box-sizing: border-box;
+}
+
+.title_page {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form_input {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 35px;
+}
+
+.form_input label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form_input input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+  font-size: 16px;
+  box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.5);
+}
+
+.button_group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  background-color: #c0c0c0;
+  color: rgb(0, 0, 0);
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #afafaf;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+h3, p {
+  color: black;
+}
+
+.page_image {
+  flex: 1 1 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.page_image img.background-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+
+.form_input select {
+  padding: 10px 40px 10px 10px;
+  border-radius: 10px;
+  font-size: 16px;
+  box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: white;
+  cursor: pointer;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px 6px;
+}
+
+
