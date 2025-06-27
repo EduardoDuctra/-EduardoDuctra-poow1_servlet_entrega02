@@ -15,23 +15,26 @@ public class UserController {
 
 
 
+    //Spring já cria um objeto do tipo service. Sem eu precisar fazer new DataBaseServiceUser()
     @Autowired
     private DataBaseServiceUser db_user;
     @Autowired
     private DataBaseServiceTask db_task;
 
 
-
     @GetMapping("/register-user")
     public String registerUser(Model model) {
+        //envio um objeto USER vazio para o formulario de cadastro. Passo pq tenho o atribute no jSP
         model.addAttribute("user", new User());
-        return "register-user";  // JSP ou template para cadastro
+        return "register-user";  // JSP de cadastro
     }
 
     @PostMapping("/register-user")
+    //@ModelAttribute("user") -> com isso pego o modelo user do formulario (os campos preenchidos)
     public String registerUser(@ModelAttribute("user") User user, Model model) {
         try {
-            db_user.insertUser(user);  // Inserindo no banco
+
+            db_user.insertUser(user);
 
             System.out.println("=== Dados do Usuário Inserido ===");
             System.out.println("ID: " + user.getId());
@@ -40,15 +43,16 @@ public class UserController {
             System.out.println("Senha: " + user.getPassword());
             System.out.println("=================================");
 
-            return "redirect:/";  // Redireciona após cadastro
+            return "redirect:/";  // Redireciona para o index.jsp
         } catch (Exception e) {
             model.addAttribute("message", "Erro ao cadastrar usuário: " + e.getMessage());
-            return "register-user";  // Retorna à página de cadastro com erro
+            return "register-user";
         }
     }
 
 
 
+    //pega o usuario pela sessção e se estiver logado redireciona pro jSP
     @GetMapping("/update-user")
     public String updateUser(HttpSession session, Model model) {
 
@@ -67,6 +71,8 @@ public class UserController {
         return "update-user";
     }
 
+    //@ModelAttribute("user") -> com isso pego o modelo user do formulario (os campos preenchidos)
+    //Atualizo e setto o novo usuario a sessão
     @PostMapping("/update-user")
     public String updateUser(@ModelAttribute("user") User user, HttpSession session, Model model){
         try {
@@ -81,11 +87,12 @@ public class UserController {
             System.out.println("Nova Senha: " + user.getPassword());
             System.out.println("=================================");
 
-            return "redirect:/menu";  // Redireciona após atualização bem-sucedida
+            return "redirect:/menu/dashboard";
+
         } catch (Exception e) {
             model.addAttribute("message", "Erro ao atualizar usuário: " + e.getMessage());
             model.addAttribute("user", user);
-            return "update-user"; // Volta para o formulário com a mensagem de erro
+            return "update-user";
         }
     }
 
@@ -99,10 +106,7 @@ public class UserController {
         try {
             int id = sessionUser.getId();
 
-            // Deletar todas as tarefas do usuário
             db_task.deletTaskByUserId(id);
-
-            // Deletar o usuário
             db_user.deleteUser(id);
 
             // Invalida a sessão, pois o usuário foi deletado
@@ -112,10 +116,10 @@ public class UserController {
             System.out.println("ID: " + id);
             System.out.println("========================");
 
-            return "redirect:/"; // Redireciona para home após deletar
+            return "redirect:/";
         } catch (Exception e) {
             model.addAttribute("message", "Erro ao deletar usuário: " + e.getMessage());
-            return "update-user"; // Volta para a página de update com mensagem de erro
+            return "update-user";
         }
     }
     }

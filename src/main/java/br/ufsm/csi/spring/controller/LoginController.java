@@ -22,6 +22,7 @@ public class LoginController {
         try {
             LoginService loginService = new LoginService();
 
+
             if (loginService.autentication(email, password)) {
                 System.out.printf("email: %s -- password: %s\n", email, password);
 
@@ -31,13 +32,14 @@ public class LoginController {
 
                 return "redirect:/menu/dashboard";
             } else {
-                // Caso autenticação retorne falso, exibe mensagem genérica
+
+
                 model.addAttribute("msg", "Login ou senha incorreto!");
                 model.addAttribute("email", email);
                 return "index";
             }
         } catch (Exception e) {
-            // Trata a exceção mostrando a mensagem na tela de login
+
             model.addAttribute("msg", e.getMessage());
             model.addAttribute("email", email);
             return "index";

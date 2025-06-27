@@ -64,7 +64,7 @@
 
 
             <td>
-              <form action="/tasks/concluded" method="post">
+              <form action="/tasks/concluded/${task.id}" method="post">
                 <input type="hidden" name="action" value="concluded" />
                 <input type="hidden" name="taskId" value="${task.id}" />
                 <button type="submit" class="button_list">

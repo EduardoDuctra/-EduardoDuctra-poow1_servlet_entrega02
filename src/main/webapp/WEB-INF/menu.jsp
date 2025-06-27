@@ -92,7 +92,7 @@
               <td>${task.description}</td>
               <td>${task.date}</td>
               <td>
-                <form action="/menu/concluded" method="post">
+                <form action="/menu/concluded/${task.id}" method="post">
                   <input type="hidden" name="id" value="${task.id}" />
                   <button type="submit" class="button_list">
                     <img

@@ -15,10 +15,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+//se eu quiser editar algo (tarefa ou usuario) ou trabalhar com varias tarefas uso objeto. Se for deletar ou concluir, apenas o id
+
+
+
 @Controller
 @RequestMapping("/tasks")
 public class TaskController {
 
+    //Spring já cria um objeto do tipo service. Sem eu precisar fazer new DataBaseServiceTask()
     @Autowired
     private DataBaseServiceTask db_task;
 
@@ -27,26 +33,29 @@ public class TaskController {
         User user = (User) session.getAttribute("user");
 
         if (user == null) {
-            // Usuário não está logado, redireciona para a página de login ou home
-            return "redirect:/";
+
+            return "redirect:/"; //pagina index.jsp
         }
 
         System.out.println("ID do usuário no Get do Criar tarefa: " + user.getId());
 
-        model.addAttribute("task", new Task()); // para popular o formulário se quiser
+        //passo para o formulario o objeto Task vazio
+        model.addAttribute("task", new Task());
 
-        return "create-task"; // JSP ou template para criar tarefa
+        return "create-task";
     }
 
+    //recebe o objeto task com os campos preenchidos
     @PostMapping("/create-task")
     public String createTaskSubmit(@ModelAttribute("task") Task task, HttpSession session) {
         User user = (User) session.getAttribute("user");
 
         if (user == null) {
-            return "redirect:/"; // Redireciona se não estiver logado
+            return "redirect:/";
         }
 
-        // Mapeia a categoria simples com base no nome
+
+        // Define a categoria da tarefa a partir do task.getCategory() recebido do formulário
         Category categoria = new Category();
         switch (task.getCategory().getName()) {
             case "trabalho":
@@ -65,9 +74,15 @@ public class TaskController {
 
         task.setUser(user);
         task.setCategory(categoria);
-        task.setStatus(true); // status padrão
+        task.setStatus(true);
 
-        db_task.insertTask(task);
+        try {
+            db_task.insertTask(task);
+            System.out.println("Tarefa com ID inserida com sucesso!" + task.getId());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
 
         System.out.println("=== Tarefa Criada ===");
         System.out.println("ID: " + task.getId());
@@ -77,7 +92,7 @@ public class TaskController {
         System.out.println("Usuário ID: " + user.getId());
         System.out.println("=====================");
 
-        return "redirect:/tasks/list-pending"; // redireciona para listagem
+        return "redirect:/tasks/list-pending";
     }
 
 
@@ -88,17 +103,27 @@ public class TaskController {
             return "redirect:/";
         }
 
-        List<Task> pendingTasks = db_task.listTasks(user.getId());
+        List<Task> pendingTasks = null;
+        try {
+            pendingTasks = db_task.listTasks(user.getId());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+        //atribuo um objeto do tipo tasks para o JSP
         model.addAttribute("tasks", pendingTasks);
 
         return "list-pending"; // JSP para listar tarefas pendentes
     }
 
+    //pego a categoria pela URL do que o usuário escolheu
+    //@PathVariable captura um valor dinâmico que veio pela URL, nessa caso é a categoria
     @GetMapping("/filter-type/{category}")
     public String listFilteredTask(@PathVariable("category") String categoryStr, HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
         if (user == null) {
-            return "redirect:/"; // ou para a página de login
+            return "redirect:/";
         }
 
         Category category = new Category();
@@ -117,7 +142,14 @@ public class TaskController {
                 break;
         }
 
-        List<Task> filteredTasks = db_task.listFilterTasks(user.getId(), category);
+        //passa o id e a tarefa que veio pela URL. Atribuo se for Trabalho, crio um objeto Categoria com o ID de Trabalho 1 e seto o nome dele pra trabalho
+        List<Task> filteredTasks = null;
+        try {
+            filteredTasks = db_task.listFilterTasks(user.getId(), category);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
         model.addAttribute("tasks", filteredTasks);
 
         return "list-pending";
@@ -130,14 +162,22 @@ public class TaskController {
             return "redirect:/";
         }
 
-        List<Task> concludedTasks = db_task.listConcludedTasks(user.getId());
+        List<Task> concludedTasks = null;
+        try {
+            concludedTasks = db_task.listConcludedTasks(user.getId());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
         model.addAttribute("tasks", concludedTasks);
 
         return "list-concluded";
     }
 
-    @PostMapping("/concluded")
-    public String concludeTask(@RequestParam("taskId") int taskId, HttpSession session) {
+    //pego o id da task pela URL
+    //@PathVariable captura um valor dinâmico que veio pela URL, nessa caso é o id da task
+    @PostMapping("/concluded/{taskId}")
+    public String concludeTask(@PathVariable("taskId") int taskId, HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user == null) {
             return "redirect:/";
@@ -148,13 +188,14 @@ public class TaskController {
         } catch (Exception e) {
             System.out.println("Erro ao concluir task id: " + taskId);
             e.printStackTrace();
-            // Pode adicionar tratamento de erro ou mensagem
         }
 
         // Redireciona para a lista de tarefas pendentes
         return "redirect:/tasks/list-pending";
     }
 
+    //pego o id da task pela URL
+    //@PathVariable captura um valor dinâmico que veio pela URL, nessa caso é o id da task
     @PostMapping("/delete/{id}")
     public String deleteTask(@PathVariable("id") int id, HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -174,16 +215,24 @@ public class TaskController {
     }
 
 
+    //pego o id da task pela URL
+    //@PathVariable captura um valor dinâmico que veio pela URL, nessa caso é o id da task
     @GetMapping("/edit/{id}")
-    public String editTaskForm(@PathVariable("id") int id, HttpSession session, Model model) {
+    public String editTask(@PathVariable("id") int id, HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
         if (user == null) {
             System.out.println("Usuário não logado, redirecionando para /");
             return "redirect:/";
         }
 
-        System.out.println("GET editar tarefa: " + id);
-        Task task = db_task.getTaskById(id);
+        Task task = null;
+        try {
+            System.out.println("GET editar tarefa: " + id);
+            task = db_task.getTaskById(id);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
 
         if (task == null) {
             System.out.println("Tarefa não encontrada com id: " + id);
@@ -191,24 +240,20 @@ public class TaskController {
         }
 
         model.addAttribute("task", task);
-        return "update-task"; // JSP para editar tarefa
+        return "update-task";
     }
 
+
     @PostMapping("/edit")
-    public String editTaskSubmit(@ModelAttribute("task") Task task, HttpSession session) {
+
+    // Recebo o objeto task com os novos dados editados que vieram do formulário JSP e atualizo no banco
+    public String editTask(@ModelAttribute("task") Task task, HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user == null) {
             System.out.println("Usuário não logado, redirecionando para /");
             return "redirect:/";
         }
 
-        System.out.println("Recebendo edição da tarefa id: " + task.getId());
-        System.out.println("Título: " + task.getTitle());
-        System.out.println("Descrição: " + task.getDescription());
-        System.out.println("Categoria nome: " + (task.getCategory() != null ? task.getCategory().getName() : "null"));
-        System.out.println("Data: " + task.getDate());
-
-        // Ajuste da categoria conforme seu padrão
         Category categoria = new Category();
         if (task.getCategory() != null && task.getCategory().getName() != null) {
             switch (task.getCategory().getName().toLowerCase()) {
@@ -224,19 +269,26 @@ public class TaskController {
                     categoria.setId(3);
                     categoria.setName("Estudo");
                     break;
-                default:
-                    System.out.println("Categoria inválida ou não informada, mantendo a atual.");
-                    categoria = task.getCategory(); // mantem categoria atual se for inválida
             }
         }
 
         task.setCategory(categoria);
         task.setUser(user);
-        task.setStatus(true); // mantendo padrão
+        task.setStatus(true);
 
-        db_task.updateTask(task);
+        System.out.println("Recebendo edição da tarefa id: " + task.getId());
+        System.out.println("Título: " + task.getTitle());
+        System.out.println("Descrição: " + task.getDescription());
+        System.out.println("Categoria nome: " + (task.getCategory() != null ? task.getCategory().getName() : "null"));
+        System.out.println("Data: " + task.getDate());
 
-        System.out.println("Tarefa atualizada com sucesso, id: " + task.getId());
+        try {
+            db_task.updateTask(task);
+            System.out.println("Tarefa atualizada com sucesso, id: " + task.getId());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
 
         return "redirect:/tasks/list-pending";
     }
