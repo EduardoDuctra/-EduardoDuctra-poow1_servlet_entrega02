@@ -60,7 +60,7 @@
             <td>${task.title}</td>
             <td>${task.description}</td>
             <td>${task.category.name}</td>
-            <td>${task.date}</td>
+            <td>${task.formattedDate}</td>
 
 
             <td>

@@ -1,6 +1,7 @@
 package br.ufsm.csi.spring.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Task {
 
@@ -11,6 +12,11 @@ public class Task {
     private LocalDate date;
     private User user; // Agora apenas o objeto User
     private Category category;
+
+    private String formattedDate;
+
+
+
 
     public Task() {}
 
@@ -79,4 +85,18 @@ public class Task {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+    public String getFormattedDate() {
+
+        if (this.date != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            return this.date.format(formatter);
+        }
+        return "";
+    }
+    public void setFormattedDate(String formattedDate) {
+        this.formattedDate = formattedDate;
+    }
+
+
 }

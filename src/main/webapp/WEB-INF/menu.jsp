@@ -6,6 +6,8 @@
 
 
 
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -90,7 +92,7 @@
             <tr>
               <td>${task.title}</td>
               <td>${task.description}</td>
-              <td>${task.date}</td>
+              <td>${task.formattedDate}</td>
               <td>
                 <form action="/menu/concluded/${task.id}" method="post">
                   <input type="hidden" name="id" value="${task.id}" />
