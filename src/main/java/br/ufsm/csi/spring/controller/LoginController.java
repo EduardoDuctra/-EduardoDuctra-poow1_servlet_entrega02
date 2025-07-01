@@ -46,6 +46,14 @@ public class LoginController {
         }
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+
+        session.invalidate();
+        System.out.println("Logout com sucesso!");
+        return "redirect:/";
+    }
+
 }
 
 

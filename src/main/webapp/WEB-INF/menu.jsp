@@ -31,7 +31,16 @@
         <input type="hidden" name="action" value="update" />
         <button type="submit">Meus Dados</button>
       </form>
+
+      <form action="/logout" method="get">
+        <button type="submit">Logout</button>
+      </form>
+
     </div>
+
+
+
+
   </div>
 
   <div class="menu">

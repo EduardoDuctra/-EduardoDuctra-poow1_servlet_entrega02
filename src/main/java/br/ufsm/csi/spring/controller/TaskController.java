@@ -32,10 +32,10 @@ public class TaskController {
     public String createTaskForm(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
 
-        if (user == null) {
-
-            return "redirect:/"; //pagina index.jsp
-        }
+//        if (user == null) {
+//
+//            return "redirect:/"; //pagina index.jsp
+//        }
 
         System.out.println("ID do usuário no Get do Criar tarefa: " + user.getId());
 
@@ -50,9 +50,9 @@ public class TaskController {
     public String createTaskSubmit(@ModelAttribute("task") Task task, HttpSession session) {
         User user = (User) session.getAttribute("user");
 
-        if (user == null) {
-            return "redirect:/";
-        }
+//        if (user == null) {
+//            return "redirect:/";
+//        }
 
 
         // Define a categoria da tarefa a partir do task.getCategory() recebido do formulário
@@ -99,9 +99,9 @@ public class TaskController {
     @GetMapping("/list-pending")
     public String listPendingTasks(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
-        if (user == null) {
-            return "redirect:/";
-        }
+//        if (user == null) {
+//            return "redirect:/";
+//        }
 
         List<Task> pendingTasks = null;
         try {
@@ -122,9 +122,9 @@ public class TaskController {
     @GetMapping("/filter-type/{category}")
     public String listFilteredTask(@PathVariable("category") String categoryStr, HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
-        if (user == null) {
-            return "redirect:/";
-        }
+//        if (user == null) {
+//            return "redirect:/";
+//        }
 
         Category category = new Category();
         switch (categoryStr.toLowerCase()) {
@@ -158,9 +158,9 @@ public class TaskController {
     @GetMapping("/list-concluded")
     public String listConcludedTasks(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
-        if (user == null) {
-            return "redirect:/";
-        }
+//        if (user == null) {
+//            return "redirect:/";
+//        }
 
         List<Task> concludedTasks = null;
         try {
@@ -179,9 +179,9 @@ public class TaskController {
     @PostMapping("/concluded/{taskId}")
     public String concludeTask(@PathVariable("taskId") int taskId, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        if (user == null) {
-            return "redirect:/";
-        }
+//        if (user == null) {
+//            return "redirect:/";
+//        }
 
         try {
             db_task.conCludedTask(taskId);
@@ -199,9 +199,9 @@ public class TaskController {
     @PostMapping("/delete/{id}")
     public String deleteTask(@PathVariable("id") int id, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        if (user == null) {
-            return "redirect:/";
-        }
+//        if (user == null) {
+//            return "redirect:/";
+//        }
 
         try {
             System.out.println("ID da task para deletar: " + id);
@@ -220,10 +220,10 @@ public class TaskController {
     @GetMapping("/edit/{id}")
     public String editTask(@PathVariable("id") int id, HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
-        if (user == null) {
-            System.out.println("Usuário não logado, redirecionando para /");
-            return "redirect:/";
-        }
+//        if (user == null) {
+//            System.out.println("Usuário não logado, redirecionando para /");
+//            return "redirect:/";
+//        }
 
         Task task = null;
         try {
@@ -249,10 +249,10 @@ public class TaskController {
     // Recebo o objeto task com os novos dados editados que vieram do formulário JSP e atualizo no banco
     public String editTask(@ModelAttribute("task") Task task, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        if (user == null) {
-            System.out.println("Usuário não logado, redirecionando para /");
-            return "redirect:/";
-        }
+//        if (user == null) {
+//            System.out.println("Usuário não logado, redirecionando para /");
+//            return "redirect:/";
+//        }
 
         Category categoria = new Category();
         if (task.getCategory() != null && task.getCategory().getName() != null) {

@@ -58,9 +58,9 @@ public class UserController {
 
         User loggedUser = (User) session.getAttribute("user");
 
-        if (loggedUser == null) {
-            return "redirect:/";
-        }
+//        if (loggedUser == null) {
+//            return "redirect:/";
+//        }
 
         model.addAttribute("user", loggedUser);
 
@@ -99,9 +99,9 @@ public class UserController {
     @PostMapping("/delete-user")
     public String deleteUser(HttpSession session, Model model) {
         User sessionUser = (User) session.getAttribute("user");
-        if (sessionUser == null) {
-            return "redirect:/";
-        }
+//        if (sessionUser == null) {
+//            return "redirect:/";
+//        }
 
         try {
             int id = sessionUser.getId();
@@ -122,7 +122,7 @@ public class UserController {
             return "update-user";
         }
     }
-    }
+}
 
 
 

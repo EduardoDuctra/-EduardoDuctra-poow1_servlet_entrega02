@@ -29,9 +29,9 @@ public class MenuController {
     public String showMenu(HttpSession session, Model model) {
 
         User sessionUser = (User) session.getAttribute("user");
-        if (sessionUser == null) {
-            return "redirect:/";
-        }
+//        if (sessionUser == null) {
+//            return "redirect:/";
+//        }
 
         int userId = sessionUser.getId();
 
@@ -60,10 +60,10 @@ public class MenuController {
 
     @PostMapping("/concluded/{taskId}")
     public String concludeTask(@PathVariable("taskId") int taskId, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            return "redirect:/";
-        }
+//        User user = (User) session.getAttribute("user");
+//        if (user == null) {
+//            return "redirect:/";
+//        }
 
         try {
             db_task.conCludedTask(taskId);
