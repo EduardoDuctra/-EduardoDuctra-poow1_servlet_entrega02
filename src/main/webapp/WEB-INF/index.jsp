@@ -17,7 +17,6 @@
         </div>
 
         <div class="login_form">
-            <!-- Formulário de Login -->
             <form action="/login" method="post">
                 <div class="form_input">
                     <label for="email"><b>Email</b></label>
@@ -34,19 +33,15 @@
                     />
                 </div>
 
-                <!-- Grupo de Botões: Logar e Cadastrar Usuário -->
                 <div class="button_group">
-                    <button type="submit" name="action" value="logar">Logar</button>
+                    <button type="submit">Logar</button>
                     <a href="/user/register-user" class="button">Cadastrar Usuário</a>
-
-
-
-
                 </div>
+
             </form>
         </div>
 
-        <!-- Mensagem de erro se necessário -->
+
         <c:if test="${not empty msg}">
             <h2>${msg}</h2>
         </c:if>

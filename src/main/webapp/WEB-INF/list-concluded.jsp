@@ -47,7 +47,6 @@
 <br>
 
 <form action="/menu/dashboard" method="get">
-  <input type="hidden" name="action" value="back" />
   <button type="submit">Voltar</button>
 </form>
 </div>

@@ -28,7 +28,6 @@
 
     <div class="navegation_user_update">
       <form action="/user/update-user" method="get">
-        <input type="hidden" name="action" value="update" />
         <button type="submit">Meus Dados</button>
       </form>
 
@@ -47,7 +46,6 @@
     <ul class="menu_buttons">
       <li>
         <form action="/tasks/create-task" method="get">
-          <input type="hidden" name="action" value="create" />
           <button type="submit" class="button_menu">
             <img class="icon_button" src="${pageContext.request.contextPath}/assets/add_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="Ícone Criar Tarefa" /><br/>
             Criar Tarefa
@@ -57,7 +55,6 @@
 
       <li>
         <form action="/tasks/list-pending" method="get">
-          <input type="hidden" name="action" value="listPending">
           <button type="submit" class="button_menu">
             <img class="icon_button" src="${pageContext.request.contextPath}/assets/menu_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="Ícone Tarefas Pendentes" />
             Tarefas Pendentes
@@ -67,7 +64,6 @@
 
       <li>
         <form action="/tasks/list-concluded" method="get">
-          <input type="hidden" name="action" value="listConcluded">
           <button type="submit" class="button_menu">
             <img class="icon_button" src="${pageContext.request.contextPath}/assets/fact_check_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg" alt="Ícone Tarefas Concluidas" />
             Tarefas Concluídas

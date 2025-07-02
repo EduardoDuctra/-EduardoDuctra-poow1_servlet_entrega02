@@ -65,7 +65,6 @@
 
             <td>
               <form action="/tasks/concluded/${task.id}" method="post">
-                <input type="hidden" name="action" value="concluded" />
                 <input type="hidden" name="taskId" value="${task.id}" />
                 <button type="submit" class="button_list">
                   <img
@@ -79,7 +78,6 @@
 
             <td>
               <form action="/tasks/edit/${task.id}" method="get">
-                <input type="hidden" name="action" value="edit" />
                 <input type="hidden" name="id" value="${task.id}" />
                 <button type="submit" class="button_list">
                   <img
@@ -93,7 +91,6 @@
 
             <td>
               <form action="/tasks/delete/${task.id}" method="post">
-                <input type="hidden" name="action" value="delete" />
                 <input type="hidden" name="id" value="${task.id}" />
                 <button type="submit" class="button_list">
                   <img
@@ -114,7 +111,6 @@
   <br />
 
   <form action="/menu/dashboard" method="get">
-    <input type="hidden" name="action" value="back" />
     <button type="submit">Voltar</button>
   </form>
 </div>
