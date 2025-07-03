@@ -78,7 +78,7 @@ body {
   margin-top: 20px;
 }
 
-button {
+button, a.button {
   background-color: #c0c0c0;
   color: rgb(0, 0, 0);
   padding: 12px 24px;
@@ -89,11 +89,16 @@ button {
   cursor: pointer;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease;
+  min-width: 200px;
+  text-align: center;
+  margin-bottom: 15px;
+
 }
 
-button:hover {
+button:hover, a.button:hover {
   background-color: #afafaf;
 }
+
 
 h1, h2 {
   text-align: center;
@@ -141,22 +146,11 @@ h3, p {
 
 
 a.button {
-  background-color: #c0c0c0;
-  color: rgb(0, 0, 0);
-  padding: 12px 24px;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
+
   text-decoration: none;
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease;
-  display: inline-block;
-}
 
-a.button:hover {
-  background-color: #afafaf;
+
 }
 
 

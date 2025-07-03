@@ -40,7 +40,9 @@
     </div>
 
 
-    <button type="submit" class="button">Atualizar</button>
+    <div class="button_group">
+      <button type="submit" class="button">Atualizar</button>
+    </div>
 
   </form:form>
 
