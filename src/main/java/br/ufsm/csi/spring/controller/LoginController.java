@@ -1,6 +1,9 @@
 package br.ufsm.csi.spring.controller;
 
 import br.ufsm.csi.spring.model.User;
+import br.ufsm.csi.spring.service.DataBaseServiceCategory;
+import br.ufsm.csi.spring.service.DataBaseServiceTask;
+import br.ufsm.csi.spring.service.DataBaseServiceUser;
 import br.ufsm.csi.spring.service.LoginService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -48,6 +51,14 @@ public class LoginController {
 
     @GetMapping("/logout")
     public String logout(HttpSession session){
+
+        try {
+            new DataBaseServiceCategory().close();
+            new DataBaseServiceTask().close();
+            new DataBaseServiceUser().close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         session.invalidate();
         System.out.println("Logout com sucesso!");
