@@ -43,7 +43,7 @@ public class UserController {
             System.out.println("Senha: " + user.getPassword());
             System.out.println("=================================");
 
-            return "redirect:/";  // Redireciona para o index.jsp
+            return "redirect:/";
         } catch (Exception e) {
             model.addAttribute("message", "Erro ao cadastrar usuário: " + e.getMessage());
             return "register-user";

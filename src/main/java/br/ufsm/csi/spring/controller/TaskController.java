@@ -16,8 +16,6 @@ import java.util.List;
 
 //se eu quiser editar algo (tarefa ou usuario) ou trabalhar com varias tarefas uso objeto. Se for deletar ou concluir, apenas o id
 
-
-
 @Controller
 @RequestMapping("/tasks")
 public class TaskController {
@@ -29,11 +27,6 @@ public class TaskController {
     @GetMapping("/create-task")
     public String createTaskForm(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
-
-//        if (user == null) {
-//
-//            return "redirect:/"; //pagina index.jsp
-//        }
 
         System.out.println("ID do usuário no Get do Criar tarefa: " + user.getId());
 
@@ -47,11 +40,6 @@ public class TaskController {
     @PostMapping("/create-task")
     public String createTaskSubmit(@ModelAttribute("task") Task task, HttpSession session) {
         User user = (User) session.getAttribute("user");
-
-//        if (user == null) {
-//            return "redirect:/";
-//        }
-
 
         // Define a categoria da tarefa a partir do task.getCategory() recebido do formulário
         Category categoria = new Category();
@@ -97,9 +85,6 @@ public class TaskController {
     @GetMapping("/list-pending")
     public String listPendingTasks(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
-//        if (user == null) {
-//            return "redirect:/";
-//        }
 
         List<Task> pendingTasks = null;
         try {
@@ -112,7 +97,7 @@ public class TaskController {
         //atribuo um objeto do tipo tasks para o JSP
         model.addAttribute("tasks", pendingTasks);
 
-        return "list-pending"; // JSP para listar tarefas pendentes
+        return "list-pending";
     }
 
     //pego a categoria pela URL do que o usuário escolheu
@@ -120,9 +105,6 @@ public class TaskController {
     @GetMapping("/filter-type/{category}")
     public String listFilteredTask(@PathVariable("category") String categoryStr, HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
-//        if (user == null) {
-//            return "redirect:/";
-//        }
 
         Category category = new Category();
         switch (categoryStr.toLowerCase()) {
@@ -156,9 +138,6 @@ public class TaskController {
     @GetMapping("/list-concluded")
     public String listConcludedTasks(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
-//        if (user == null) {
-//            return "redirect:/";
-//        }
 
         List<Task> concludedTasks = null;
         try {
@@ -175,11 +154,7 @@ public class TaskController {
     //pego o id da task pela URL
     //@PathVariable captura um valor dinâmico que veio pela URL, nessa caso é o id da task
     @PostMapping("/concluded/{taskId}")
-    public String concludeTask(@PathVariable("taskId") int taskId, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-//        if (user == null) {
-//            return "redirect:/";
-//        }
+    public String concludeTask(@PathVariable("taskId") int taskId) {
 
         try {
             db_task.conCludedTask(taskId);
@@ -188,18 +163,14 @@ public class TaskController {
             e.printStackTrace();
         }
 
-        // Redireciona para a lista de tarefas pendentes
         return "redirect:/tasks/list-pending";
     }
 
     //pego o id da task pela URL
     //@PathVariable captura um valor dinâmico que veio pela URL, nessa caso é o id da task
     @PostMapping("/delete/{id}")
-    public String deleteTask(@PathVariable("id") int id, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-//        if (user == null) {
-//            return "redirect:/";
-//        }
+    public String deleteTask(@PathVariable("id") int id) {
+
 
         try {
             System.out.println("ID da task para deletar: " + id);
@@ -216,12 +187,8 @@ public class TaskController {
     //pego o id da task pela URL
     //@PathVariable captura um valor dinâmico que veio pela URL, nessa caso é o id da task
     @GetMapping("/edit/{id}")
-    public String editTask(@PathVariable("id") int id, HttpSession session, Model model) {
-        User user = (User) session.getAttribute("user");
-//        if (user == null) {
-//            System.out.println("Usuário não logado, redirecionando para /");
-//            return "redirect:/";
-//        }
+    public String editTask(@PathVariable("id") int id, Model model) {
+
 
         Task task = null;
         try {
@@ -247,10 +214,6 @@ public class TaskController {
     // Recebo o objeto task com os novos dados editados que vieram do formulário JSP e atualizo no banco
     public String editTask(@ModelAttribute("task") Task task, HttpSession session) {
         User user = (User) session.getAttribute("user");
-//        if (user == null) {
-//            System.out.println("Usuário não logado, redirecionando para /");
-//            return "redirect:/";
-//        }
 
         Category categoria = new Category();
         if (task.getCategory() != null && task.getCategory().getName() != null) {

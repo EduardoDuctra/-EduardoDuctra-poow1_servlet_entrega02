@@ -25,7 +25,6 @@ public class LoginController {
         try {
             LoginService loginService = new LoginService();
 
-
             if (loginService.autentication(email, password)) {
                 System.out.printf("email: %s -- password: %s\n", email, password);
 
