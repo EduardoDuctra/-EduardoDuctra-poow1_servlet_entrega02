@@ -34,15 +34,6 @@ public class DataBaseServiceCategory {
         }
     }
 
-    public String insertCategory(Category category) {
-        try {
-            return new CategoryDAO(connection).insertCategory(category);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Erro ao inserir categoria: " + e.getMessage();
-        }
-    }
-
     public Category getCategoryById(int id) {
         CategoryDAO categoryDAO = new CategoryDAO(connection);
         return categoryDAO.getCategoryById(id);

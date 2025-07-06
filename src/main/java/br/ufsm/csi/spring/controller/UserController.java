@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
 
-
     //Spring já cria um objeto do tipo service. Sem eu precisar fazer new DataBaseServiceUser()
     @Autowired
     private DataBaseServiceUser db_user;

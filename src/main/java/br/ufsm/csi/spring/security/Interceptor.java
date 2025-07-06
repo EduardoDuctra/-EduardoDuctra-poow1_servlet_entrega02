@@ -17,7 +17,7 @@ public class Interceptor implements HandlerInterceptor {
             return true;
         }
 
-        if (url.startsWith("/css/") || url.startsWith("/js/") || url.startsWith("/assets/")) {
+        if (url.startsWith("/css/") || url.startsWith("/assets/")) {
             return true;
         }
 

@@ -1,7 +1,5 @@
 package br.ufsm.csi.spring.dao;
 
-
-
 import br.ufsm.csi.spring.model.User;
 
 import java.sql.Connection;

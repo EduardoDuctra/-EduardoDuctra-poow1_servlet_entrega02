@@ -1,7 +1,5 @@
 package br.ufsm.csi.spring.dao;
 
-
-
 import br.ufsm.csi.spring.model.Category;
 
 import java.sql.Connection;
@@ -16,23 +14,6 @@ public class CategoryDAO {
         this.connection = connection;
     }
 
-
-    public String insertCategory(Category category) {
-
-        String sql = "INSERT INTO categoria (nome) VALUES (?)";
-        try {
-            PreparedStatement pstmt = connection.prepareStatement(sql);
-
-            pstmt.setString(1, category.getName());
-
-            pstmt.executeUpdate();
-            pstmt.close();
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return "Categoria cadastrada com sucesso!";
-    }
 
     public Category getCategoryById(int id) {
         String sql = "SELECT * FROM categoria WHERE id = ?";

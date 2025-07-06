@@ -1,7 +1,6 @@
 package br.ufsm.csi.spring.dao;
 
 
-
 import br.ufsm.csi.spring.model.Category;
 import br.ufsm.csi.spring.model.Task;
 import br.ufsm.csi.spring.model.User;

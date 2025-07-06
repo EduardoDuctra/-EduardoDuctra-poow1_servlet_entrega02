@@ -44,7 +44,6 @@
       <table>
         <thead>
         <tr>
-          <th>ID</th>
           <th>Título</th>
           <th>Descrição</th>
           <th>Categoria</th>
@@ -56,7 +55,6 @@
         <tbody>
         <c:forEach var="task" items="${tasks}">
           <tr>
-            <td>${task.id}</td>
             <td>${task.title}</td>
             <td>${task.description}</td>
             <td>${task.category.name}</td>

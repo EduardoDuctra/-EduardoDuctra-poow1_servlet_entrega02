@@ -1,7 +1,5 @@
 package br.ufsm.csi.spring.service;
 
-
-
 import br.ufsm.csi.spring.dao.TaskDAO;
 import br.ufsm.csi.spring.model.Category;
 import br.ufsm.csi.spring.model.Task;
@@ -10,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
