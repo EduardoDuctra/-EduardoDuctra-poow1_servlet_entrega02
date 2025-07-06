@@ -111,14 +111,15 @@ public class TaskDAO {
 
 
     public String updateTask(Task task) {
-        String sql = "UPDATE tarefa SET titulo = ?, descricao = ?, concluido = ?, data = ? WHERE id = ?";
+        String sql = "UPDATE tarefa SET titulo = ?, descricao = ?, concluido = ?, data = ?, codcategoria = ? WHERE id = ?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, task.getTitle());
             pstmt.setString(2, task.getDescription());
             pstmt.setBoolean(3, task.isStatus());
             pstmt.setDate(4, java.sql.Date.valueOf(task.getDate()));
-            pstmt.setInt(5, task.getId());
+            pstmt.setInt(5, task.getCategory().getId());
+            pstmt.setInt(6, task.getId());
 
             int rowsAffected = pstmt.executeUpdate();
 

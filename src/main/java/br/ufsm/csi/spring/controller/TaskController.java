@@ -4,6 +4,7 @@ package br.ufsm.csi.spring.controller;
 import br.ufsm.csi.spring.model.Category;
 import br.ufsm.csi.spring.model.Task;
 import br.ufsm.csi.spring.model.User;
+import br.ufsm.csi.spring.service.DataBaseServiceCategory;
 import br.ufsm.csi.spring.service.DataBaseServiceTask;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class TaskController {
     @Autowired
     private DataBaseServiceTask db_task;
 
+    @Autowired
+    private DataBaseServiceCategory db_category;
+
     @GetMapping("/create-task")
     public String createTaskForm(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
@@ -42,24 +46,10 @@ public class TaskController {
         User user = (User) session.getAttribute("user");
 
         // Define a categoria da tarefa a partir do task.getCategory() recebido do formulário
-        Category categoria = new Category();
-        switch (task.getCategory().getName()) {
-            case "trabalho":
-                categoria.setId(1);
-                categoria.setName("Trabalho");
-                break;
-            case "pessoal":
-                categoria.setId(2);
-                categoria.setName("Pessoal");
-                break;
-            case "estudo":
-                categoria.setId(3);
-                categoria.setName("Estudo");
-                break;
-        }
+        Category category = db_category.returnCategory(task.getCategory().getName());
 
         task.setUser(user);
-        task.setCategory(categoria);
+        task.setCategory(category);
         task.setStatus(true);
 
         try {
@@ -106,21 +96,8 @@ public class TaskController {
     public String listFilteredTask(@PathVariable("category") String categoryStr, HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
 
-        Category category = new Category();
-        switch (categoryStr.toLowerCase()) {
-            case "trabalho":
-                category.setId(1);
-                category.setName("Trabalho");
-                break;
-            case "pessoal":
-                category.setId(2);
-                category.setName("Pessoal");
-                break;
-            case "estudo":
-                category.setId(3);
-                category.setName("Estudo");
-                break;
-        }
+        Category category = db_category.returnCategory(categoryStr);
+
 
         //passa o id e a tarefa que veio pela URL. Atribuo se for Trabalho, crio um objeto Categoria com o ID de Trabalho 1 e seto o nome dele pra trabalho
         List<Task> filteredTasks = null;
@@ -215,25 +192,9 @@ public class TaskController {
     public String editTask(@ModelAttribute("task") Task task, HttpSession session) {
         User user = (User) session.getAttribute("user");
 
-        Category categoria = new Category();
-        if (task.getCategory() != null && task.getCategory().getName() != null) {
-            switch (task.getCategory().getName().toLowerCase()) {
-                case "trabalho":
-                    categoria.setId(1);
-                    categoria.setName("Trabalho");
-                    break;
-                case "pessoal":
-                    categoria.setId(2);
-                    categoria.setName("Pessoal");
-                    break;
-                case "estudo":
-                    categoria.setId(3);
-                    categoria.setName("Estudo");
-                    break;
-            }
-        }
+        Category category = db_category.returnCategory(task.getCategory().getName());
 
-        task.setCategory(categoria);
+        task.setCategory(category);
         task.setUser(user);
         task.setStatus(true);
 

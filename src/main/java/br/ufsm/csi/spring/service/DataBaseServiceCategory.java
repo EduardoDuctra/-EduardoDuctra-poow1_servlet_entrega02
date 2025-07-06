@@ -39,4 +39,23 @@ public class DataBaseServiceCategory {
         return categoryDAO.getCategoryById(id);
     }
 
+    public Category returnCategory(String name) {
+
+        Category category = new Category();
+        switch (name.toLowerCase()) {
+            case "trabalho":
+                category.setId(1);
+                category.setName("Trabalho");
+                break;
+            case "pessoal":
+                category.setId(2);
+                category.setName("Pessoal");
+                break;
+            case "estudo":
+                category.setId(3);
+                category.setName("Estudo");
+                break;
+        }
+        return category;
+    }
 }
